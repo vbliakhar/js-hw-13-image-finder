@@ -4,14 +4,13 @@ import articleTpl from './partials/templateImg.hbs';
 import { success, error } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
-
-// const basicLightbox = require('basiclightbox');
+import * as basicLightbox from 'basiclightbox';
+import '../node_modules/basiclightbox/dist/basicLightbox.min.css';
 const refs = {
   searchForm: document.querySelector('.search-form'),
   articlesContainer: document.querySelector('.gallery'),
   loadMoreBtn: document.querySelector('.my-element-selector'),
 };
-let onMyIndex;
 const newApiService = new NewApiService();
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
@@ -57,7 +56,10 @@ function myImageBig(data) {
   if (data.target.nodeName !== 'IMG') {
     return;
   }
-  console.log(data.target);
+  const clickImg = data.target.dataset.large;
+
+  console.log(clickImg);
+  basicLightbox.create(`<img width="1400" height="900" src="${clickImg}">`).show();
 }
 function onFetchSuccess() {
   success({
